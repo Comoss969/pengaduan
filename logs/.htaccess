@@ -1,0 +1,11 @@
+# Protect logs directory from web access
+# File ini mencegah akses langsung ke file log via web browser
+
+# Deny all access
+Order Deny,Allow
+Deny from all
+
+# Optional: Allow access only from localhost (uncomment if needed)
+# Allow from 127.0.0.1
+# Allow from ::1
+

@@ -1,0 +1,4 @@
+- [ ] Analyze the current navbar structure in includes/header.php
+- [ ] Add CSS rules in assets/css/style.css for responsive navbar-collapse positioning
+- [ ] Add JavaScript in includes/header.php for closing menu on outside click
+- [ ] Test the changes on different screen sizes
