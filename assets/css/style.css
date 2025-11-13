@@ -754,3 +754,257 @@ a:active {
         margin: 8px 0;
     }
 }
+
+/* ========================================
+   MODERN FOOTER STYLES
+   ======================================== */
+
+.modern-footer {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    color: #E2E8F0;
+    margin-top: 60px;
+    padding: 0;
+    position: relative;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Footer Divider - Garis pemisah tipis di atas footer */
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(59, 130, 246, 0.5) 20%, 
+        rgba(59, 130, 246, 0.8) 50%, 
+        rgba(59, 130, 246, 0.5) 80%, 
+        transparent 100%
+    );
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    margin-bottom: 0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 20px;
+}
+
+/* Footer Content - 2 kolom di desktop */
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-column {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Footer Heading */
+.footer-heading {
+    color: #F8FAFC;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.footer-icon {
+    color: #3B82F6;
+    flex-shrink: 0;
+}
+
+.footer-icon-inline {
+    color: #3B82F6;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* Footer Text */
+.footer-text {
+    color: #CBD5E1;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.footer-text strong {
+    color: #F8FAFC;
+    font-weight: 600;
+}
+
+.footer-description {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+/* Footer Badge - Patch version */
+.footer-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.footer-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
+}
+
+/* Footer Link */
+.footer-link {
+    color: #3B82F6;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    color: #60A5FA;
+    text-decoration: underline;
+    transform: translateX(2px);
+}
+
+/* Footer Copyright */
+.footer-copyright {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-copyright-text {
+    color: #94A3B8;
+    font-size: 0.875rem;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive Design - Mobile (1 kolom) */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+
+    .footer-container {
+        padding: 30px 15px 15px;
+    }
+
+    .footer-heading {
+        font-size: 1rem;
+    }
+
+    .footer-text {
+        font-size: 0.9rem;
+    }
+
+    .footer-description {
+        font-size: 0.85rem;
+    }
+
+    .footer-copyright-text {
+        font-size: 0.8rem;
+    }
+
+    .footer-badge {
+        font-size: 0.8rem;
+        padding: 5px 12px;
+    }
+}
+
+/* Tablet adjustments */
+@media (max-width: 992px) and (min-width: 769px) {
+    .footer-content {
+        gap: 30px;
+    }
+
+    .footer-container {
+        padding: 35px 20px 15px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 576px) {
+    .modern-footer {
+        margin-top: 40px;
+    }
+
+    .footer-container {
+        padding: 25px 15px 15px;
+    }
+
+    .footer-heading {
+        font-size: 0.95rem;
+    }
+
+    .footer-text {
+        font-size: 0.85rem;
+    }
+
+    .footer-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .footer-icon-inline {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Animation for footer elements */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-column:nth-child(1) {
+    animation: fadeInUp 0.6s ease-in-out 0.1s both;
+}
+
+.footer-column:nth-child(2) {
+    animation: fadeInUp 0.6s ease-in-out 0.2s both;
+}
+
+.footer-copyright {
+    animation: fadeInUp 0.6s ease-in-out 0.3s both;
+}
+
+/* Hover effect for footer columns */
+.footer-column {
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.footer-column:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Print styles - Hide footer when printing */
+@media print {
+    .modern-footer {
+        display: none;
+    }
+}

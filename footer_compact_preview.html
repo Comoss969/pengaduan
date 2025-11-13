@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Compact Preview - Sistem Pengaduan Masyarakat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Dark Mode Theme - Compact Footer Preview */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #0F172A, #1E293B);
+            background-attachment: fixed;
+            color: #F8FAFC;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .preview-header {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #1E293B;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-header h1 {
+            color: #F8FAFC;
+            margin-bottom: 10px;
+        }
+
+        .preview-header p {
+            color: #94A3B8;
+            font-size: 1.1rem;
+        }
+
+        .preview-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .preview-section {
+            background-color: #1E293B;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-section h2 {
+            color: #F8FAFC;
+            border-bottom: 2px solid #3B82F6;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            background-color: #334155;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .feature-item h4 {
+            color: #F8FAFC;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .feature-item p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .demo-layout {
+            background-color: #334155;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .demo-layout h3 {
+            color: #F8FAFC;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .layout-preview {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px 8px 0 0;
+            padding: 15px 20px 10px;
+            margin: 10px 0;
+            position: relative;
+            max-height: 80px;
+            overflow: hidden;
+        }
+
+        .layout-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .layout-column {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .layout-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .layout-label {
+            color: #94A3B8;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .layout-value {
+            color: #CBD5E1;
+            font-weight: 500;
+        }
+
+        .layout-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .toggle-demo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            border: none;
+            border-radius: 50%;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            z-index: 1000;
+        }
+
+        .copyright-demo {
+            text-align: center;
+            padding: 5px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #64748B;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .preview-header {
+                margin: 10px;
+                padding: 30px 15px;
+            }
+
+            .preview-section {
+                padding: 20px;
+            }
+
+            .layout-preview {
+                padding: 12px 15px 8px;
+            }
+
+            .layout-content {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .layout-column {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1>🎯 Footer Compact Preview</h1>
+        <p>Sistem Pengaduan Masyarakat - Compact Footer with Toggle</p>
+    </div>
+
+    <div class="preview-content">
+        <div class="preview-section">
+            <h2>✨ New Features</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>🎛️ Toggle Button</h4>
+                    <p>Hamburger-style button untuk show/hide footer</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📏 Compact Design</h4>
+                    <p>Footer lebih kecil dan tidak memakan space</p>
+                </div>
+                <div class="feature-item">
+                    <h4>💾 Memory State</h4>
+                    <p>Status footer tersimpan di localStorage</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔲 Border Line</h4>
+                    <p>Garis border biru di atas footer</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📱 Responsive</h4>
+                    <p>Adaptive layout untuk semua device</p>
+                </div>
+                <div class="feature-item">
+                    <h4>⚡ Smooth Animation</h4>
+                    <p>Slide up/down animation saat toggle</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <h2>📐 Layout Preview</h2>
+
+            <div class="demo-layout">
+                <h3>Desktop Layout (Visible)</h3>
+                <div class="layout-preview">
+                    <div class="layout-content">
+                        <div class="layout-column">
+                            <div class="layout-item">
+                                <span class="layout-label">Patch:</span>
+                                <span class="layout-badge">1.2.5</span>
+                            </div>
+                            <div class="layout-item">
+                                <span class="layout-value">Update perbaikan bug & performa</span>
+                            </div>
+                        </div>
+                        <div class="layout-column">
+                            <div class="layout-item">
+                                <span class="layout-label">Admin:</span>
+                                <span class="layout-value">Akira</span>
+                            </div>
+                            <div class="layout-item">
+                                <span class="layout-value">akiraexample@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright-demo">
+                        © 2025 Sistem Pengaduan Masyarakat
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-layout">
+                <h3>Mobile Layout (Stacked)</h3>
+                <div class="layout-preview" style="max-height: 100px;">
+                    <div class="layout-content" style="flex-direction: column; gap: 10px; align-items: flex-start;">
+                        <div class="layout-column" style="width: 100%; justify-content: space-between;">
+                            <div class="layout-item">
+                                <span class="layout-label">Patch:</span>
+                                <span class="layout-badge">1.2.5</span>
+                            </div>
+                            <div class="layout-item">
+                                <span class="layout-label">Admin:</span>
+                                <span class="layout-value">Akira</span>
+                            </div>
+                        </div>
+                        <div class="layout-column" style="width: 100%; justify-content: space-between;">
+                            <div class="layout-item">
+                                <span class="layout-value">Update perbaikan bug & performa</span>
+                            </div>
+                            <div class="layout-item">
+                                <span class="layout-value">akiraexample@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright-demo">
+                        © 2025 Sistem Pengaduan Masyarakat
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <h2>🎮 How to Use</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>🔘 Toggle Button</h4>
+                    <p>Klik tombol bulat di kanan bawah untuk show/hide footer</p>
+                </div>
+                <div class="feature-item">
+                    <h4>💾 Persistent State</h4>
+                    <p>Status footer tersimpan, tidak berubah saat refresh</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📱 Mobile Friendly</h4>
+                    <p>Button menyesuaikan ukuran di mobile</p>
+                </div>
+                <div class="feature-item">
+                    <h4>⚡ Smooth Transition</h4>
+                    <p>Animasi slide halus saat toggle</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Button Demo -->
+    <button class="toggle-demo" onclick="toggleDemoFooter()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6,9 12,15 18,9"></polyline>
+        </svg>
+    </button>
+
+    <script>
+        function toggleDemoFooter() {
+            const button = document.querySelector('.toggle-demo');
+            const icon = button.querySelector('svg');
+
+            // Simple demo - just rotate the icon
+            const isRotated = icon.style.transform === 'rotate(180deg)';
+            icon.style.transform = isRotated ? 'rotate(0deg)' : 'rotate(180deg)';
+
+            // You can add more complex toggle logic here
+            alert('Footer toggle functionality!\n\nIn real implementation:\n- Footer will slide up/down\n- State saved to localStorage\n- Icon rotates 180 degrees');
+        }
+    </script>
+</body>
+</html>
