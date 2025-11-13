@@ -108,16 +108,16 @@ body {
 }
 
 .btn-danger {
-    background-color: #3B82F6;
-    border-color: #3B82F6;
+    background-color: #DC2626;
+    border-color: #DC2626;
     color: #E2E8F0;
 }
 
 .btn-danger:hover {
-    background-color: #60A5FA;
-    border-color: #60A5FA;
+    background-color: #EF4444;
+    border-color: #EF4444;
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
 }
 
 .btn-success {

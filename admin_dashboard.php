@@ -145,8 +145,17 @@ $posts = $stmt->fetchAll();
                             <span class="badge bg-primary ms-2">Kata Kasar: <?php echo count($profanityCheck['found_words']); ?></span>
                         <?php endif; ?>
                     </p>
-                    <?php if ($post['foto']): ?>
-                        <img src="<?php echo $post['foto']; ?>" class="img-fluid rounded mt-2" alt="Foto">
+                    <?php
+                    // Fetch photos for this post
+                    $stmt_photos = $pdo->prepare("SELECT photo_path FROM post_photos WHERE post_id = ?");
+                    $stmt_photos->execute([$post['id']]);
+                    $photos = $stmt_photos->fetchAll(PDO::FETCH_COLUMN);
+                    if ($photos): ?>
+                        <div class="mt-2">
+                            <?php foreach ($photos as $photo): ?>
+                                <img src="<?php echo $photo; ?>" class="img-fluid rounded me-2 mb-2" alt="Foto" style="max-width: 200px;">
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
 
                     <!-- Comments -->

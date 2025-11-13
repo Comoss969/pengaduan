@@ -1,4 +1,9 @@
-- [ ] Analyze the current navbar structure in includes/header.php
-- [ ] Add CSS rules in assets/css/style.css for responsive navbar-collapse positioning
-- [ ] Add JavaScript in includes/header.php for closing menu on outside click
-- [ ] Test the changes on different screen sizes
+- [x] Create migration for post_photos table
+- [x] Run migration to add table and migrate existing photos
+- [x] Update user_dashboard.php to support multiple photos (up to 3) in post creation
+- [x] Add edit functionality for posts
+- [x] Update post display to show multiple photos
+- [x] Add button group for Edit and Delete buttons
+- [x] Add JavaScript validation for max 3 photos with custom modal alert
+- [x] Change delete button color to red in CSS
+- [x] Test the new features (syntax check passed, database tables verified)

@@ -20,6 +20,8 @@ if ($mysqli->connect_error) {
 }
 $mysqli->set_charset("utf8");
 
-// Start session
+// Configure session for persistence
+ini_set('session.cookie_lifetime', 86400); // 24 hours
+ini_set('session.gc_maxlifetime', 86400); // 24 hours
 session_start();
 ?>
