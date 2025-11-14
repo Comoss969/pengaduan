@@ -212,6 +212,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_edit_post'])) {
     exit;
 }
 
+// Handle edit comment
+if (isset($_GET['edit_comment'])) {
+    $edit_comment_id = (int)$_GET['edit_comment'];
+    $stmt = $pdo->prepare("SELECT * FROM comments WHERE id = ? AND user_id = ? AND is_admin = 0");
+    $stmt->execute([$edit_comment_id, $_SESSION['user_id']]);
+    $edit_comment = $stmt->fetch();
+    if (!$edit_comment) {
+        $error = "Komentar tidak ditemukan atau Anda tidak memiliki izin untuk mengeditnya.";
+    }
+}
+
+// Handle edit comment submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_edit_comment'])) {
+    $comment_id = $_POST['comment_id'];
+    $komentar = trim($_POST['komentar']);
+
+    // Check for profanity
+    $profanityCheck = $profanityFilter->checkProfanity($komentar);
+    if ($profanityCheck['has_profanity']) {
+        $profanityFilter->logProfanity($komentar, $profanityCheck['found_words'], $_SESSION['user_id'], 'comment');
+        $komentar = $profanityFilter->censorText($komentar);
+        $warning = "Peringatan: Kata-kata tidak pantas telah dideteksi dan disensor.";
+    }
+
+    // Update comment (only non-admin comments owned by user)
+    $stmt = $pdo->prepare("UPDATE comments SET komentar = ? WHERE id = ? AND user_id = ? AND is_admin = 0");
+    $stmt->execute([$komentar, $comment_id, $_SESSION['user_id']]);
+
+    // Handle new photo (replace existing)
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+        // Delete existing photo file if exists
+        $stmt_old = $pdo->prepare("SELECT foto FROM comments WHERE id = ?");
+        $stmt_old->execute([$comment_id]);
+        $old_comment = $stmt_old->fetch();
+        if ($old_comment && $old_comment['foto'] && file_exists($old_comment['foto'])) {
+            unlink($old_comment['foto']);
+        }
+
+        // Upload new photo
+        $target_dir = "uploads/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0755, true);
+        }
+        $foto = $target_dir . basename($_FILES['foto']['name']);
+        if (move_uploaded_file($_FILES['foto']['tmp_name'], $foto)) {
+            $stmt_photo = $pdo->prepare("UPDATE comments SET foto = ? WHERE id = ?");
+            $stmt_photo->execute([$foto, $comment_id]);
+        }
+    }
+
+    $_SESSION['success_message'] = isset($warning) ? $warning : "Komentar berhasil diupdate!";
+    header('Location: user_dashboard.php');
+    exit;
+}
+
 // Handle delete post (Soft Delete)
 // Saat user menghapus postingan, tidak benar-benar dihapus dari database
 // Hanya menandai dengan deleted_at timestamp (soft delete)
@@ -378,7 +433,11 @@ $posts = $stmt->fetchAll();
                                             <?php endif; ?>
                                             <small class="ms-2" style="color: #ffffff;"><?php echo $comment['tanggal']; ?></small>
                                         </div>
-
+                                        <?php if ($comment['user_id'] == $_SESSION['user_id'] && !$comment['is_admin']): ?>
+                                            <div class="btn-group ms-2" role="group">
+                                                <a href="?edit_comment=<?php echo $comment['id']; ?>" class="btn btn-sm btn-warning rounded-pill">Edit</a>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -390,7 +449,37 @@ $posts = $stmt->fetchAll();
     </div>
 
     <div class="col-md-4">
-        <?php if (isset($edit_post)): ?>
+        <?php if (isset($edit_comment)): ?>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Edit Komentar</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="comment_id" value="<?php echo $edit_comment['id']; ?>">
+                        <div class="mb-3">
+                            <label for="komentar" class="form-label">Komentar:</label>
+                            <textarea class="form-control" id="komentar" name="komentar" rows="4" required><?php echo htmlspecialchars($edit_comment['komentar']); ?></textarea>
+                        </div>
+
+                        <?php if (isset($edit_comment['foto']) && $edit_comment['foto']): ?>
+                            <div class="mb-3">
+                                <label class="form-label">Foto saat ini:</label>
+                                <img src="<?php echo $edit_comment['foto']; ?>" class="img-fluid rounded mb-2" alt="Foto komentar" style="max-width: 200px;">
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto baru (opsional, akan mengganti foto lama):</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                        </div>
+
+                        <button type="submit" name="submit_edit_comment" class="btn btn-primary w-100">Update Komentar</button>
+                        <a href="user_dashboard.php" class="btn btn-secondary w-100 mt-2">Batal</a>
+                    </form>
+                </div>
+            </div>
+        <?php elseif (isset($edit_post)): ?>
             <div class="card">
                 <div class="card-header">
                     <h5>Edit Pengaduan</h5>
