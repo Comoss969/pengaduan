@@ -47,15 +47,14 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-lg border-0">
                     <div class="card-body p-5">
-                        <!-- Logo -->
-                        <!--<div class="text-center mb-4">
-                            <img src="assets/images/download.png" alt="Logo SMK Negeri 5 Surakarta" class="img-fluid" style="max-height: 120px; width: auto; filter: invert(1);">
-                        </div> -->
-                        <h2 class="text-center mb-4 fw-bold" style="color: #ffffff;">Login sebagai Admin</h2>
+                        <!-- PingMe Logo -->
+                        <div class="text-center mb-4">
+                            <img src="assets/images/ping_me.png" alt="PingMe Logo" class="img-fluid" style="max-height: 120px; width: auto;">
+                        </div>
                         <p class="text-center mb-4" style="color: #ffffff;">Masuk untuk mengelola pengaduan</p>
 
                         <?php if (isset($error)): ?>
-                            <div class="alert alert-danger"><?php echo $error; ?></div>
+                            <div class="alert alert-primary"><?php echo $error; ?></div>
                         <?php endif; ?>
 
                         <form method="POST">

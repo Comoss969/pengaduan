@@ -1,9 +1,9 @@
-<?php
+hk<?php
 include 'config.php';
 
-// Check if user is logged in as admin
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header('Location: login_admin.php');
+// Check if user is logged in as user
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
+    header('Location: login_user.php');
     exit;
 }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = "Username hanya boleh mengandung huruf, angka, dan underscore.";
     }
 
-    // Check if username already exists (exclude current admin)
+    // Check if username already exists (exclude current user)
     if (!empty($username)) {
         $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
         $stmt->execute([$username, $_SESSION['user_id']]);
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['success_message'] = "Akun berhasil diperbarui! Mengalihkan ke dashboard...";
                 echo "<script>
                     setTimeout(function() {
-                        window.location.href = 'admin_dashboard.php';
+                        window.location.href = 'user_dashboard.php';
                     }, 2000);
                 </script>";
             } else {
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Ambil data user untuk pre-fill form
-$stmt = $pdo->prepare("SELECT username, email, profile_picture FROM users WHERE id = ?");
+$stmt = $pdo->prepare("SELECT username FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch();
 ?>
@@ -120,7 +120,7 @@ $user = $stmt->fetch();
     <div class="col-md-6 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h4 class="mb-0">Edit Akun Admin</h4>
+                <h4 class="mb-0">Edit Akun Saya</h4>
             </div>
             <div class="card-body">
                 <?php
@@ -173,7 +173,7 @@ $user = $stmt->fetch();
                                 Menyimpan...
                             </span>
                         </button>
-                        <a href="admin_dashboard.php" class="btn btn-secondary">Kembali ke Dashboard</a>
+                        <a href="user_dashboard.php" class="btn btn-secondary">Kembali ke Dashboard</a>
                     </div>
                 </form>
             </div>

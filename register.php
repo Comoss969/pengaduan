@@ -3,7 +3,7 @@ include 'config.php';
 
 // If already logged in as user, redirect to dashboard
 if (isset($_SESSION['role']) && $_SESSION['role'] == 'user') {
-    header('Location: user_dashboard.php');
+    header('Location: login_user.php');
     exit;
 }
 
@@ -53,15 +53,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, 'user')");
             $stmt->execute([$username, $hashedPassword]);
 
-            // Auto login after registration
-            $user_id = $pdo->lastInsertId();
-            $_SESSION['user_id'] = $user_id;
-            $_SESSION['role'] = 'user';
-            $_SESSION['username'] = $username;
+            // Set success message for display
+            $success = "Registrasi berhasil! Mengalihkan ke halaman login...";
 
-            // Redirect to dashboard
-            header('Location: user_dashboard.php');
-            exit;
+            // Auto redirect to login page after 2 seconds
+            echo "<script>
+                setTimeout(function() {
+                    window.location.href = 'login_user.php';
+                }, 2000);
+            </script>";
+
         } catch (PDOException $e) {
             $errors[] = "Terjadi kesalahan saat mendaftar. Silakan coba lagi.";
         }
@@ -78,6 +79,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .form-control::placeholder {
+            color: #ffffff !important;
+        }
+        .alert {
+            color: #ffffff !important;
+        }
+        .btn-primary {
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
@@ -85,20 +97,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-lg border-0">
                     <div class="card-body p-5">
-                        <!-- Logo -->
-                        <!--<div class="text-center mb-4">
-                            <img src="assets/images/download.png" alt="Logo SMK Negeri 5 Surakarta" class="img-fluid" style="max-height: 120px; width: auto; filter: invert(1);">
-                        </div> -->
-                        <h2 class="text-center mb-4 fw-bold" style="color: #ffffff;">Daftar Akun</h2>
+                        <!-- PingMe Logo -->
+                        <div class="text-center mb-4">
+                            <img src="assets/images/ping_me.png" alt="PingMe Logo" class="img-fluid" style="max-height: 120px; width: auto;">
+                        </div>
                         <p class="text-center mb-4" style="color: #ffffff;">Buat akun baru untuk mengirim pengaduan</p>
 
                         <?php if (!empty($errors)): ?>
-                            <div class="alert alert-danger">
+                            <div class="alert alert-primary">
                                 <ul class="mb-0">
                                     <?php foreach ($errors as $error): ?>
                                         <li><?php echo htmlspecialchars($error); ?></li>
                                     <?php endforeach; ?>
                                 </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (isset($success)): ?>
+                            <div class="alert alert-primary">
+                                <?php echo htmlspecialchars($success); ?>
                             </div>
                         <?php endif; ?>
 
@@ -112,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                        maxlength="50"
                                        pattern="[a-zA-Z0-9_]+"
                                        title="Username hanya boleh mengandung huruf, angka, dan underscore">
-                                <small class="text-muted" style="color: #94A3B8;">Minimal 3 karakter, hanya huruf, angka, dan underscore</small>
+                                <small style="color: #ffffff;;">Minimal 3 karakter, hanya huruf, angka, dan underscore</small>
                             </div>
 
                             <div class="mb-3">
@@ -120,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="password" class="form-control" id="password" name="password" 
                                        required 
                                        minlength="6">
-                                <small class="text-muted" style="color: #94A3B8;">Minimal 6 karakter</small>
+                                <small  style="color: #ffffff;;">Minimal 6 karakter</small>
                             </div>
 
                             <div class="mb-3">
@@ -157,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (password !== confirmPassword) {
                 e.preventDefault();
-                alert('Password dan konfirmasi password tidak cocok.');
+                customConfirm('Password dan konfirmasi password tidak cocok.', 'Error Validasi');
                 return false;
             }
 

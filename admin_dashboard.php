@@ -108,11 +108,11 @@ $posts = $stmt->fetchAll();
         </div>
 
         <?php if (isset($success)): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <div class="alert alert-primary"><?php echo $success; ?></div>
         <?php endif; ?>
 
         <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+            <div class="alert alert-primary"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
 

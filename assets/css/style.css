@@ -60,7 +60,7 @@ body {
 
 .card-header {
     background-color: #1E293B;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(151, 93, 93, 0.1);
     font-weight: 600;
     color: #F8FAFC;
 }
@@ -75,6 +75,7 @@ body {
     font-weight: 500;
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
+    padding: 8px 14px;
 }
 
 .btn-primary {
@@ -281,6 +282,8 @@ body {
     max-width: 100%;
 }
 
+
+
 /* Welcome text di tengah */
 .navbar-welcome {
     position: absolute;
@@ -355,6 +358,18 @@ body {
 
 .nav-button-logout {
     font-weight: bold;
+}
+
+.nav-button-edit {
+    background-color: #1E293B;
+    border-color: #60A5FA;
+    color: #60A5FA;
+}
+
+.nav-button-edit:hover {
+    background-color: #60A5FA;
+    color: #ffffff;
+    border-color: #60A5FA;
 }
 
 /* Badge di dalam nav-button */
@@ -1006,5 +1021,411 @@ a:active {
 @media print {
     .modern-footer {
         display: none;
+    }
+}
+
+/* ========================================
+   CONSISTENT MODAL STYLES
+   ======================================== */
+
+/* Base modal styling - Apply to all modals for consistency */
+.custom-modal .modal-dialog {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.custom-modal .modal-content {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.2);
+    backdrop-filter: blur(10px);
+    animation: modalSlideIn 0.4s ease-out;
+}
+
+.custom-modal .modal-header {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px 14px 0 0;
+    padding: 1.5rem 1.5rem 1rem;
+}
+
+.custom-modal .modal-title {
+    color: #F8FAFC;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.custom-modal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.custom-modal .btn-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.custom-modal .modal-body {
+    color: #E2E8F0;
+    padding: 1.5rem;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.custom-modal .modal-footer {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 0 0 14px 14px;
+    padding: 1rem 1.5rem 1.5rem;
+}
+
+.custom-modal .modal-footer .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.custom-modal .modal-footer .btn-primary {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.custom-modal .modal-footer .btn-primary:hover {
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+}
+
+.custom-modal .modal-footer .btn-secondary {
+    background-color: #475569;
+    border-color: #475569;
+    color: #E2E8F0;
+}
+
+.custom-modal .modal-footer .btn-secondary:hover {
+    background-color: #64748B;
+    border-color: #64748B;
+    transform: translateY(-2px);
+}
+
+/* Modal animations */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Modal backdrop enhancement */
+.custom-modal .modal-backdrop {
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+/* Responsive modal adjustments */
+@media (max-width: 576px) {
+    .custom-modal .modal-dialog {
+        margin: 1rem;
+    }
+
+    .custom-modal .modal-content {
+        border-radius: 12px;
+    }
+
+    .custom-modal .modal-header,
+    .custom-modal .modal-footer {
+        padding: 1rem;
+    }
+
+    .custom-modal .modal-body {
+        padding: 1rem;
+    }
+}
+
+/* ========================================
+   CUSTOM CONFIRMATION MODAL STYLES
+   ======================================== */
+
+.custom-confirm-modal .modal-dialog {
+    animation: modalFadeIn 0.3s ease-out;
+    max-width: 400px;
+}
+
+.custom-confirm-modal .modal-content {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(59, 130, 246, 0.2);
+    backdrop-filter: blur(10px);
+    animation: modalSlideIn 0.4s ease-out;
+}
+
+.custom-confirm-modal .modal-header {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px 14px 0 0;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: none;
+}
+
+.custom-confirm-modal .modal-title {
+    color: #F8FAFC;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    width: 100%;
+}
+
+.custom-confirm-modal .modal-body {
+    color: #E2E8F0;
+    padding: 1.5rem;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.custom-confirm-modal .modal-footer {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 0 0 14px 14px;
+    padding: 1rem 1.5rem 1.5rem;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.custom-confirm-modal .modal-footer .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    min-width: 100px;
+    transition: all 0.3s ease;
+}
+
+.custom-confirm-modal .modal-footer .btn-confirm {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+    border: none;
+    color: #E2E8F0;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.custom-confirm-modal .modal-footer .btn-confirm:hover {
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+}
+
+.custom-confirm-modal .modal-footer .btn-cancel {
+    background-color: #475569;
+    border-color: #475569;
+    color: #E2E8F0;
+}
+
+.custom-confirm-modal .modal-footer .btn-cancel:hover {
+    background-color: #64748B;
+    border-color: #64748B;
+    transform: translateY(-2px);
+}
+
+.custom-confirm-modal .btn-close {
+    display: none;
+}
+
+/* Responsive adjustments for confirmation modal */
+@media (max-width: 480px) {
+    .custom-confirm-modal .modal-dialog {
+        margin: 1rem;
+        max-width: calc(100vw - 2rem);
+    }
+
+    .custom-confirm-modal .modal-content {
+        border-radius: 12px;
+    }
+
+    .custom-confirm-modal .modal-header,
+    .custom-confirm-modal .modal-footer {
+        padding: 1rem;
+    }
+
+    .custom-confirm-modal .modal-body {
+        padding: 1rem;
+    }
+
+    .custom-confirm-modal .modal-footer .btn {
+        flex: 1;
+        min-width: 80px;
+    }
+}
+
+
+
+/* ========================================
+   ALERT STYLES FOR EDIT ACCOUNT
+   ======================================== */
+
+.alert-danger {
+    background-color: #DC2626;
+    border-color: #B91C1C;
+    color: #FEE2E2;
+}
+
+.alert-success {
+    background-color: #16A34A;
+    border-color: #15803D;
+    color: #DCFCE7;
+}
+
+/* ========================================
+   RESPONSIVE BUTTON FIXES
+   ======================================== */
+
+/* Bulk Actions Button Container */
+.bulk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Card Action Buttons Container */
+.card-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* General Button Responsive Fixes */
+@media (max-width: 480px) {
+    /* All buttons become smaller on mobile */
+    .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        min-height: 36px;
+        margin-right: 6px;
+    }
+
+    /* Primary buttons */
+    .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Small buttons */
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+        min-height: 32px;
+    }
+
+    /* Bulk actions container */
+    .bulk-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .bulk-actions .form-check {
+        margin-bottom: 0.5rem;
+    }
+
+    .bulk-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Card action buttons */
+    .card-action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .card-action-buttons .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Button groups */
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.25rem;
+    }
+
+    .btn-group .btn {
+        border-radius: 6px !important;
+        margin-bottom: 0;
+    }
+
+    /* Form check labels */
+    .form-check-label {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Card body padding adjustments */
+    .card-body {
+        padding: 1rem;
+    }
+
+    /* Container adjustments to prevent overflow */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Specific fixes for admin trash page */
+    .d-flex.justify-content-between.align-items-start {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .d-flex.justify-content-between.align-items-start .flex-grow-1 {
+        width: 100%;
+    }
+
+    .d-flex.justify-content-between.align-items-start .card-action-buttons {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Medium mobile devices (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+    .bulk-actions {
+        gap: 0.75rem;
+    }
+
+    .card-action-buttons {
+        gap: 0.5rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
 }

@@ -41,7 +41,7 @@ if (!defined('HEADER_INCLUDED')) {
             <div class="navbar-container">
                 <!-- Welcome text di tengah -->
                 <div class="navbar-welcome">
-                    <span class="welcome-text">Welcome, <?php 
+                    <span class="welcome-text">Welcome, <?php
                         if (isset($_SESSION['username'])) {
                             echo htmlspecialchars($_SESSION['username']);
                         } else {
@@ -62,9 +62,11 @@ if (!defined('HEADER_INCLUDED')) {
                                 <?php endif; ?>
                             </span>
                         </a>
-                        <a href="edit_account.php" class="nav-button">Edit Akun</a>
+                        <a href="edit_account.php" class="nav-button nav-button-edit">Edit Akun</a>
                         <a href="logout.php" class="nav-button nav-button-logout">Logout</a>
                     <?php else: ?>
+                        <a href="user_dashboard.php" class="nav-button">Dashboard</a>
+                        <a href="user_edit_account.php" class="nav-button">Edit Akun</a>
                         <a href="logout.php" class="nav-button nav-button-logout">Logout</a>
                     <?php endif; ?>
                 </div>
@@ -108,6 +110,12 @@ if (!defined('HEADER_INCLUDED')) {
                             <a class="nav-link-mobile nav-link-logout" href="logout.php">Logout</a>
                         </li>
                     <?php else: ?>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link-mobile" href="user_dashboard.php">Dashboard</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a class="nav-link-mobile" href="user_edit_account.php">Edit Akun</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link-mobile nav-link-logout" href="logout.php">Logout</a>
                         </li>

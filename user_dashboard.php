@@ -261,27 +261,101 @@ $posts = $stmt->fetchAll();
 <?php include 'includes/header.php'; ?>
 
 <div class="row">
+    <!-- Form Pengisian di Bagian Atas -->
+    <div class="col-12 mb-4">
+        <?php if (isset($edit_post)): ?>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Edit Pengaduan</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="post_id" value="<?php echo $edit_post['id']; ?>">
+                        <div class="mb-3">
+                            <label class="form-label">Mode:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="edit_anonim" value="anonim" <?php echo $edit_post['is_anonim'] ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="edit_anonim">Anonim</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="edit_normal" value="normal" <?php echo !$edit_post['is_anonim'] ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="edit_normal">Normal</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="keluhan" class="form-label">Keluhan/Saran:</label>
+                            <textarea class="form-control" id="keluhan" name="keluhan" rows="4" required><?php echo htmlspecialchars($edit_post['keluhan']); ?></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto baru (opsional, maksimal 3, akan mengganti foto lama):</label>
+                            <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple>
+                        </div>
+
+                        <button type="submit" name="submit_edit_post" class="btn btn-primary">Update Pengaduan</button>
+                        <a href="user_dashboard.php" class="btn btn-secondary ms-2">Batal</a>
+                    </form>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Buat Pengaduan Baru</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Mode:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="anonim" value="anonim" checked>
+                                <label class="form-check-label" for="anonim">Anonim</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mode" id="normal" value="normal">
+                                <label class="form-check-label" for="normal">Normal</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="keluhan" class="form-label">Keluhan/Saran:</label>
+                            <textarea class="form-control" id="keluhan" name="keluhan" rows="4" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto (opsional, maksimal 3):</label>
+                            <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple>
+                        </div>
+
+                        <button type="submit" name="submit_post" class="btn btn-primary">Kirim Pengaduan</button>
+                    </form>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Timeline Pengaduan -->
     <div class="col-md-8">
         <h2 class="mb-4" style="color: #ffffff;">Timeline Pengaduan</h2>
 
-        <?php 
+        <?php
         // Tampilkan flash message dari session jika ada
         if (isset($_SESSION['success_message'])) {
-            echo '<div class="alert alert-success">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
+            echo '<div class="alert alert-primary">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
             unset($_SESSION['success_message']);
         }
-        
+
         if (isset($_SESSION['error_message'])) {
-            echo '<div class="alert alert-danger">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
+            echo '<div class="alert alert-primary">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
             unset($_SESSION['error_message']);
         }
-        
+
         if (isset($success)): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <div class="alert alert-primary"><?php echo $success; ?></div>
         <?php endif; ?>
 
         <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+            <div class="alert alert-primary"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
         <?php foreach ($posts as $post): ?>
@@ -389,77 +463,7 @@ $posts = $stmt->fetchAll();
         <?php endforeach; ?>
     </div>
 
-    <div class="col-md-4">
-        <?php if (isset($edit_post)): ?>
-            <div class="card">
-                <div class="card-header">
-                    <h5>Edit Pengaduan</h5>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="post_id" value="<?php echo $edit_post['id']; ?>">
-                        <div class="mb-3">
-                            <label class="form-label">Mode:</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mode" id="edit_anonim" value="anonim" <?php echo $edit_post['is_anonim'] ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="edit_anonim">Anonim</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mode" id="edit_normal" value="normal" <?php echo !$edit_post['is_anonim'] ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="edit_normal">Normal</label>
-                            </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="keluhan" class="form-label">Keluhan/Saran:</label>
-                            <textarea class="form-control" id="keluhan" name="keluhan" rows="4" required><?php echo htmlspecialchars($edit_post['keluhan']); ?></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="foto" class="form-label">Foto baru (opsional, maksimal 3, akan mengganti foto lama):</label>
-                            <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple>
-                        </div>
-
-                        <button type="submit" name="submit_edit_post" class="btn btn-primary w-100">Update Pengaduan</button>
-                        <a href="user_dashboard.php" class="btn btn-secondary w-100 mt-2">Batal</a>
-                    </form>
-                </div>
-            </div>
-        <?php else: ?>
-            <div class="card">
-                <div class="card-header">
-                    <h5>Buat Pengaduan Baru</h5>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label class="form-label">Mode:</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mode" id="anonim" value="anonim" checked>
-                                <label class="form-check-label" for="anonim">Anonim</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mode" id="normal" value="normal">
-                                <label class="form-check-label" for="normal">Normal</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="keluhan" class="form-label">Keluhan/Saran:</label>
-                            <textarea class="form-control" id="keluhan" name="keluhan" rows="4" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="foto" class="form-label">Foto (opsional, maksimal 3):</label>
-                            <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple>
-                        </div>
-
-                        <button type="submit" name="submit_post" class="btn btn-primary w-100">Kirim Pengaduan</button>
-                    </form>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
 </div>
 
 <script>
@@ -480,17 +484,17 @@ function validatePhotoCount(input) {
         // Create custom alert modal
         const alertModal = document.createElement('div');
         alertModal.innerHTML = `
-            <div class="modal fade" id="photoAlertModal" tabindex="-1" aria-labelledby="photoAlertModalLabel" aria-hidden="true">
+            <div class="modal fade custom-modal" id="photoAlertModal" tabindex="-1" aria-labelledby="photoAlertModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="background-color: #1E293B; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                            <h5 class="modal-title" id="photoAlertModalLabel" style="color: #F8FAFC;">Peringatan</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="photoAlertModalLabel">Peringatan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body" style="color: #E2E8F0;">
+                        <div class="modal-body">
                             Maksimal hanya 3 foto yang dapat diupload!
                         </div>
-                        <div class="modal-footer" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                         </div>
                     </div>

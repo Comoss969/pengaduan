@@ -76,49 +76,41 @@ if (isset($_GET['permanent_delete'])) {
     }
 }
 
-// Handle bulk restore (restore multiple posts)
-if (isset($_POST['bulk_restore']) && isset($_POST['post_ids'])) {
-    $post_ids = $_POST['post_ids'];
-    $restored_count = 0;
-    
-    foreach ($post_ids as $post_id) {
-        $post_id = (int)$post_id;
-        if ($post_id > 0) {
-            $stmt = $pdo->prepare("UPDATE posts SET deleted_at = NULL WHERE id = ?");
-            $stmt->execute([$post_id]);
-            if ($stmt->rowCount() > 0) {
-                $restored_count++;
-            }
-        }
-    }
-    
-    if ($restored_count > 0) {
-        $success = "$restored_count postingan berhasil dikembalikan!";
-    }
-}
+// Handle bulk actions
+if (isset($_POST['bulk_action']) && isset($_POST['selected_ids'])) {
+    $selected_ids = $_POST['selected_ids'];
+    $bulk_action = $_POST['bulk_action'];
 
-// Handle bulk permanent delete
-// Hapus permanen beberapa postingan sekaligus
-// Comments akan terhapus otomatis karena ON DELETE CASCADE
-if (isset($_POST['bulk_permanent_delete']) && isset($_POST['post_ids'])) {
-    $post_ids = $_POST['post_ids'];
-    $deleted_count = 0;
-    
-    foreach ($post_ids as $post_id) {
-        $post_id = (int)$post_id;
-        if ($post_id > 0) {
-            // Hapus permanen postingan
-            // Comments akan terhapus otomatis karena ON DELETE CASCADE
-            $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ?");
-            $stmt->execute([$post_id]);
-            if ($stmt->rowCount() > 0) {
-                $deleted_count++;
+    if ($bulk_action === 'restore') {
+        $restored_count = 0;
+        foreach ($selected_ids as $post_id) {
+            $post_id = (int)$post_id;
+            if ($post_id > 0) {
+                $stmt = $pdo->prepare("UPDATE posts SET deleted_at = NULL WHERE id = ?");
+                $stmt->execute([$post_id]);
+                if ($stmt->rowCount() > 0) {
+                    $restored_count++;
+                }
             }
         }
-    }
-    
-    if ($deleted_count > 0) {
-        $success = "$deleted_count postingan dan semua komentarnya berhasil dihapus permanen!";
+        if ($restored_count > 0) {
+            $success = "$restored_count postingan berhasil dikembalikan!";
+        }
+    } elseif ($bulk_action === 'delete') {
+        $deleted_count = 0;
+        foreach ($selected_ids as $post_id) {
+            $post_id = (int)$post_id;
+            if ($post_id > 0) {
+                $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ?");
+                $stmt->execute([$post_id]);
+                if ($stmt->rowCount() > 0) {
+                    $deleted_count++;
+                }
+            }
+        }
+        if ($deleted_count > 0) {
+            $success = "$deleted_count postingan dan semua komentarnya berhasil dihapus permanen!";
+        }
     }
 }
 
@@ -175,12 +167,20 @@ function isExpired($deleted_at) {
         <?php if (count($deleted_posts) > 0): ?>
         <form method="POST" id="bulkForm" class="mb-3">
             <div class="d-flex gap-2 mb-3">
-                <button type="submit" name="bulk_restore" class="btn btn-primary" onclick="return confirm('Yakin ingin mengembalikan postingan yang dipilih?')">
+                <button type="button" id="bulkRestoreBtn" class="btn btn-primary">
                     Restore Selected
                 </button>
-                <button type="submit" name="bulk_permanent_delete" class="btn btn-primary" onclick="return confirm('Yakin ingin menghapus permanen postingan yang dipilih? Tindakan ini tidak bisa dibatalkan!')">
+                <button type="button" id="bulkDeleteBtn" class="btn btn-primary">
                     Hapus Permanen Selected
                 </button>
+            </div>
+
+            <!-- Select All Checkbox -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="selectAll" onchange="selectAll(this)">
+                <label class="form-check-label" style="color: #ffffff;" for="selectAll">
+                    Pilih Semua
+                </label>
             </div>
         <?php endif; ?>
 
@@ -200,7 +200,7 @@ function isExpired($deleted_at) {
                 <div class="card timeline-item mb-3">
                     <div class="card-body">
                         <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" name="post_ids[]" value="<?php echo $post['id']; ?>" form="bulkForm">
+                            <input class="form-check-input itemCheckbox" type="checkbox" name="selected_ids[]" value="<?php echo $post['id']; ?>" form="bulkForm">
                             <label class="form-check-label" style="color: #ffffff;">
                                 Pilih untuk bulk action
                             </label>
@@ -267,11 +267,67 @@ function isExpired($deleted_at) {
 </div>
 
 <script>
-// Select all checkbox
-function selectAll(checkbox) {
-    const checkboxes = document.querySelectorAll('input[name="post_ids[]"]');
-    checkboxes.forEach(cb => cb.checked = checkbox.checked);
+const selectAll = document.getElementById("selectAll");
+const itemCheckboxes = document.querySelectorAll(".itemCheckbox");
+
+if (selectAll) {
+    selectAll.addEventListener("change", function () {
+        itemCheckboxes.forEach(cb => cb.checked = selectAll.checked);
+    });
 }
+
+itemCheckboxes.forEach(cb => {
+    cb.addEventListener("change", function () {
+        const semuaChecked = Array.from(itemCheckboxes).every(x => x.checked);
+        selectAll.checked = semuaChecked;
+    });
+});
+
+// Bulk restore action
+document.getElementById('bulkRestoreBtn').addEventListener('click', async function() {
+    const selectedIds = Array.from(document.querySelectorAll('input[name="selected_ids[]"]:checked')).map(cb => cb.value);
+
+    if (selectedIds.length === 0) {
+        alert('Tidak ada item yang dipilih.');
+        return;
+    }
+
+    const confirmed = await customConfirm('Yakin ingin mengembalikan postingan yang dipilih?', 'Konfirmasi Bulk Restore');
+    if (confirmed) {
+        // Create hidden inputs
+        const form = document.getElementById('bulkForm');
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'bulk_action';
+        actionInput.value = 'restore';
+        form.appendChild(actionInput);
+
+        form.submit();
+    }
+});
+
+// Bulk delete action
+document.getElementById('bulkDeleteBtn').addEventListener('click', async function() {
+    const selectedIds = Array.from(document.querySelectorAll('input[name="selected_ids[]"]:checked')).map(cb => cb.value);
+
+    if (selectedIds.length === 0) {
+        alert('Tidak ada item yang dipilih.');
+        return;
+    }
+
+    const confirmed = await customConfirm('Yakin ingin menghapus permanen postingan yang dipilih? Tindakan ini tidak bisa dibatalkan!', 'Konfirmasi Bulk Delete');
+    if (confirmed) {
+        // Create hidden inputs
+        const form = document.getElementById('bulkForm');
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'bulk_action';
+        actionInput.value = 'delete';
+        form.appendChild(actionInput);
+
+        form.submit();
+    }
+});
 </script>
 
 <?php include 'includes/footer.php'; ?>

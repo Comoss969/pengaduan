@@ -71,11 +71,11 @@ $user = $stmt->fetch();
             <div class="card-body">
                 <!-- Alert untuk sukses/error -->
                 <?php if (isset($success)): ?>
-                    <div class="alert alert-success"><?php echo $success; ?></div>
+                    <div class="alert alert-primary"><?php echo $success; ?></div>
                 <?php endif; ?>
 
                 <?php if (!empty($errors)): ?>
-                    <div class="alert alert-danger">
+                    <div class="alert alert-primary">
                         <ul class="mb-0">
                             <?php foreach ($errors as $error): ?>
                                 <li><?php echo $error; ?></li>
