@@ -593,6 +593,59 @@ body::after {
     animation: float 3s ease-in-out infinite;
 }
 
+/* Custom Dark Modal Styles */
+.custom-modal .modal-content {
+    background: #0f0f0f !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0,255,170,0.2) !important;
+}
+
+.custom-modal .modal-header {
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+.custom-modal .modal-title {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.custom-modal .modal-body {
+    color: #fff !important;
+    padding: 25px !important;
+}
+
+.custom-modal .modal-footer {
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+.custom-modal .btn-close {
+    filter: invert(1) !important;
+}
+
+.custom-modal .btn-secondary {
+    background: rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    color: #fff !important;
+}
+
+.custom-modal .btn-secondary:hover {
+    background: rgba(255,255,255,0.2) !important;
+    color: #fff !important;
+}
+
+.custom-modal .btn-danger {
+    background: linear-gradient(45deg, #00ffaa, #00a8ff) !important;
+    border: none !important;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(0,255,170,0.3) !important;
+}
+
+.custom-modal .btn-danger:hover {
+    background: linear-gradient(45deg, #00a8ff, #a855f7) !important;
+    box-shadow: 0 8px 25px rgba(0,168,255,0.5) !important;
+}
+
 /* Links */
 a {
     color: #00ffaa;
